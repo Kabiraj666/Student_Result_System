@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 const DB_PATH = path.join(__dirname, 'java-cli-app', 'data', 'students_db.txt');
 
 // Helper to compute grade attributes matching Java CourseGrade.java
