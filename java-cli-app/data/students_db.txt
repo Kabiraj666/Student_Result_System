@@ -1,0 +1,20 @@
+STUDENT,STU1,Aditya Sharma,aditya.sharma@btech.edu,BT22CSE001,4
+GRADE,CS201,Data Structures,4,88.0
+GRADE,CS202,Object Oriented Programming,3,94.0
+GRADE,CS203,Discrete Mathematics,4,76.5
+STUDENT,STU2,Priyanka Verma,priyanka.v@btech.edu,BT22CSE012,4
+GRADE,CS201,Data Structures,4,95.0
+GRADE,CS202,Object Oriented Programming,3,91.0
+GRADE,CS203,Discrete Mathematics,4,82.0
+STUDENT,STU3,Rohan Das,rohan.das@btech.edu,BT22ECE034,4
+GRADE,EC201,Digital Electronics,4,62.0
+GRADE,EC202,Signals and Systems,4,55.5
+GRADE,CS202,Object Oriented Programming,3,80.0
+STUDENT,STU12197,Ankit Debnath,ankitdebnath@gmail.com,BT22AIML007,4
+GRADE,CS202,Object Oriented Programming,4,98.0
+GRADE,EC202,Signals and Systems,4,97.0
+GRADE,EC201,Digital Electronics,4,99.0
+STUDENT,STU88152,Rakesh Mohan,rakeshmohan@gmail.com,BT22AIML008,4
+GRADE,CS202,Object Oriented Programming,4,50.0
+GRADE,EC202,Signals and Systems,4,35.0
+GRADE,EC201,Digital Electronics,4,67.0

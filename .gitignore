@@ -1,0 +1,13 @@
+# Dependency directories
+node_modules/
+
+# Compiled Java files
+*.class
+
+# Log files
+*.log
+.system_generated/
+
+# OS files
+.DS_Store
+Thumbs.db

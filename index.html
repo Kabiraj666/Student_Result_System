@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Result System | Academic Management Portal</title>
+    <meta name="description" content="A professional Student Result Management System. Features an administrative dashboard, interactive Java CLI terminal emulator, and source explorer.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="glow-effect"></div>
+    
+    <!-- Top Navigation Bar -->
+    <header class="app-header">
+        <div class="logo">
+            <img src="./brand_logo.jpg" alt="Logo" class="header-brand-logo">
+            <div class="logo-text">
+                <h1>STUDENT RESULT SYSTEM</h1>
+                <span>ACADEMIC MANAGEMENT PORTAL</span>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <button class="nav-btn active" data-tab="dashboard">
+                <i class="fa-solid fa-chart-line"></i> Dashboard
+            </button>
+            <button class="nav-btn" data-tab="terminal">
+                <i class="fa-solid fa-terminal"></i> Java CLI Simulator
+            </button>
+            <button class="nav-btn" data-tab="code">
+                <i class="fa-solid fa-code"></i> Code Explorer
+            </button>
+        </nav>
+        
+        <div class="header-actions" style="display: flex; align-items: center; gap: 0.75rem;">
+            <a href="https://github.com/Kabiraj666" target="_blank" class="github-link" id="github-repo-link">
+                <i class="fa-brands fa-github"></i> GitHub Code
+            </a>
+            <span class="user-profile-tag" id="user-profile-tag" style="font-size: 0.8rem; font-weight: 600; color: #ff9100; background-color: rgba(255, 145, 0, 0.08); border: 1px solid rgba(255, 145, 0, 0.2); padding: 0.55rem 0.85rem; border-radius: 8px; display: flex; align-items: center; gap: 0.35rem;">
+                <i class="fa-solid fa-user-shield"></i> admin
+            </span>
+            <button class="btn btn-secondary logout-btn" id="btn-logout" title="Sign Out" style="margin-left: 0;">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="app-container">
+        
+        <!-- ================= DASHBOARD TAB ================= -->
+        <section id="dashboard" class="tab-content active">
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-info">
+                        <span class="kpi-title">Total Enrolled</span>
+                        <h2 class="kpi-value" id="kpi-total-students">0</h2>
+                    </div>
+                    <div class="kpi-icon-wrapper red">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-info">
+                        <span class="kpi-title">Class Average SGPA</span>
+                        <h2 class="kpi-value" id="kpi-avg-sgpa">0.00</h2>
+                    </div>
+                    <div class="kpi-icon-wrapper crimson">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-info">
+                        <span class="kpi-title">Unique Courses</span>
+                        <h2 class="kpi-value" id="kpi-total-courses">0</h2>
+                    </div>
+                    <div class="kpi-icon-wrapper blue">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-info">
+                        <span class="kpi-title">Class Topper</span>
+                        <h2 class="kpi-value" id="kpi-topper-name">None</h2>
+                        <span class="kpi-subtext" id="kpi-topper-sgpa">SGPA: 0.00</span>
+                    </div>
+                    <div class="kpi-icon-wrapper silver">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-info">
+                        <span class="kpi-title">Database Status</span>
+                        <h2 class="kpi-value" id="kpi-db-status">File Synced</h2>
+                        <span class="kpi-subtext">data/students_db.txt</span>
+                    </div>
+                    <div class="kpi-icon-wrapper green">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Students Table Section -->
+                <div class="card table-card">
+                    <div class="card-header">
+                        <h3>Student Records</h3>
+                        <div class="header-controls">
+                            <div class="search-box">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="student-search-input" placeholder="Search by name or roll...">
+                            </div>
+                            <button class="btn btn-primary" id="btn-open-add-modal">
+                                <i class="fa-solid fa-plus"></i> Add Student
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="students-table">
+                            <thead>
+                                <tr>
+                                    <th>Roll Number</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Semester</th>
+                                    <th>SGPA</th>
+                                    <th>Courses</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="students-table-body">
+                                <!-- Populated dynamically by app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Academic Insights Side Panel -->
+                <div class="card insights-card">
+                    <div class="card-header">
+                        <h3>Quick Performance Analytics</h3>
+                    </div>
+                    <div class="grade-distribution-section">
+                        <h4>Class Grade Distribution</h4>
+                        <div class="grade-bars" id="grade-distribution-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                    <hr class="card-divider">
+                    <div class="recent-activities">
+                        <h4>System Logs & Persistence</h4>
+                        <div class="activity-log" id="system-logs-container">
+                            <!-- Logs generated on operations -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TERMINAL TAB ================= -->
+        <section id="terminal" class="tab-content">
+            <div class="terminal-layout">
+                <!-- Terminal Emulator -->
+                <div class="terminal-wrapper">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <span class="terminal-dot dot-close"></span>
+                            <span class="terminal-dot dot-minimize"></span>
+                            <span class="terminal-dot dot-maximize"></span>
+                        </div>
+                        <div class="terminal-title">Java CLI Console Simulator (Main.java)</div>
+                        <div class="terminal-status"><i class="fa-solid fa-circle"></i> Connected</div>
+                    </div>
+                    <div class="terminal-body" id="terminal-screen">
+                        <!-- Terminal logs printed here -->
+                    </div>
+                    <div class="terminal-input-row">
+                        <span class="terminal-prompt">></span>
+                        <input type="text" id="terminal-input" autocomplete="off" autofocus placeholder="Type choice or input here...">
+                    </div>
+                </div>
+
+                <!-- CLI Helper Info Panel -->
+                <div class="card terminal-info-card">
+                    <h3>Interactive CLI Emulator</h3>
+                    <p>This terminal simulates the compiled Java executable running on a server. It interacts directly with the same in-memory database as the dashboard above!</p>
+                    <div class="info-block">
+                        <h4>💡 Test These Commands:</h4>
+                        <ul>
+                            <li>Type <code>2</code> to see the formatted list of students in the console.</li>
+                            <li>Type <code>1</code> to add a new student step-by-step.</li>
+                            <li>Type <code>5</code> to record course scores (e.g. <code>CS201</code>, <code>Data Structures</code>, <code>4</code> credits, <code>85</code> marks) and check letter grade computation.</li>
+                            <li>Type <code>9</code> to view mathematical statistics calculated directly in Java.</li>
+                        </ul>
+                    </div>
+                    <div class="info-block">
+                        <h4>💻 Backend Architecture</h4>
+                        <p>When you enter values, they are run through Java-equivalent OOP validation pipelines. Try typing invalid marks (e.g., <code>150</code>) or negative credits (<code>-2</code>) to watch custom exceptions get caught and printed!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CODE EXPLORER TAB ================= -->
+        <section id="code" class="tab-content">
+            <div class="code-explorer-layout">
+                <!-- Code Navigation -->
+                <div class="code-sidebar">
+                    <h4>Java Source Directory</h4>
+                    <div class="file-tree">
+                        <div class="file-item active" data-file="Person.java">
+                            <i class="fa-solid fa-file-code java-icon"></i> Person.java
+                            <span class="badge badge-concept">Abstraction</span>
+                        </div>
+                        <div class="file-item" data-file="Student.java">
+                            <i class="fa-solid fa-file-code java-icon"></i> Student.java
+                            <span class="badge badge-concept">Inheritance</span>
+                        </div>
+                        <div class="file-item" data-file="CourseGrade.java">
+                            <i class="fa-solid fa-file-code java-icon"></i> CourseGrade.java
+                            <span class="badge badge-concept">Encapsulation</span>
+                        </div>
+                        <div class="file-item" data-file="InvalidGradeException.java">
+                            <i class="fa-solid fa-file-code java-icon"></i> InvalidGradeException.java
+                            <span class="badge badge-concept">Exceptions</span>
+                        </div>
+                        <div class="file-item" data-file="FileRepository.java">
+                            <i class="fa-solid fa-file-code java-icon"></i> FileRepository.java
+                            <span class="badge badge-concept">File I/O</span>
+                        </div>
+                        <div class="file-item" data-file="GradeService.java">
+                            <i class="fa-solid fa-file-code java-icon"></i> GradeService.java
+                            <span class="badge badge-concept">Business Logic</span>
+                        </div>
+                        <div class="file-item" data-file="Main.java">
+                            <i class="fa-solid fa-file-code java-icon"></i> Main.java
+                            <span class="badge badge-concept">CLI Loop</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Code Display -->
+                <div class="code-viewer">
+                    <div class="code-viewer-header">
+                        <span id="active-filename">Person.java</span>
+                        <button class="btn btn-secondary btn-sm" id="btn-copy-code">
+                            <i class="fa-solid fa-copy"></i> Copy Code
+                        </button>
+                    </div>
+                    <div class="code-viewer-body">
+                        <pre><code id="code-content" class="language-java">
+<!-- Populated dynamically -->
+                        </code></pre>
+                    </div>
+                    <div class="code-explanation-panel">
+                        <h4>OOP & Data Structure Concept Highlight</h4>
+                        <p id="code-explanation">Loading explanation...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Adding Student Details -->
+    <div class="modal-overlay" id="add-student-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Student Record</h3>
+                <button class="modal-close" id="btn-close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="add-student-form">
+                <div class="form-group">
+                    <label for="student-roll">Roll Number *</label>
+                    <input type="text" id="student-roll" required placeholder="e.g. BT22CSE045">
+                </div>
+                <div class="form-group">
+                    <label for="student-name">Full Name *</label>
+                    <input type="text" id="student-name" required placeholder="e.g. Rahul Gupta">
+                </div>
+                <div class="form-group">
+                    <label for="student-email">Email Address *</label>
+                    <input type="email" id="student-email" required placeholder="e.g. rahul.g@btech.edu">
+                </div>
+                <div class="form-group">
+                    <label for="student-semester">Semester (1-8) *</label>
+                    <input type="number" id="student-semester" min="1" max="8" required value="4">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Managing Course Grades -->
+    <div class="modal-overlay" id="manage-grades-modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3 id="grade-modal-title">Manage Grades: Rahul Gupta</h3>
+                <button class="modal-close" id="btn-close-grade-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="grade-modal-layout">
+                <!-- Add Grade Form -->
+                <div class="grade-form-section">
+                    <h4>Add / Update Course Grade</h4>
+                    <form id="add-grade-form">
+                        <div class="form-group">
+                            <label for="course-code">Course Code *</label>
+                            <input type="text" id="course-code" required placeholder="e.g. CS201" style="text-transform: uppercase;">
+                        </div>
+                        <div class="form-group">
+                            <label for="course-name">Course Name *</label>
+                            <input type="text" id="course-name" required placeholder="e.g. Data Structures">
+                        </div>
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="course-credits">Credits (1-6) *</label>
+                                <input type="number" id="course-credits" min="1" max="6" required value="4">
+                            </div>
+                            <div class="form-group">
+                                <label for="course-marks">Marks (0-100) *</label>
+                                <input type="number" id="course-marks" min="0" max="100" step="0.1" required placeholder="e.g. 85">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Add Course Grade</button>
+                    </form>
+                </div>
+
+                <!-- Current Grades List -->
+                <div class="grade-list-section">
+                    <h4>Recorded Course Grades</h4>
+                    <div class="grade-table-wrapper">
+                        <table class="grades-table">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Course</th>
+                                    <th>Credits</th>
+                                    <th>Marks</th>
+                                    <th>Grade</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="student-grades-list-body">
+                                <!-- Populated dynamically by app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide-out Drawer for Student Profile Analytics -->
+    <div class="drawer-overlay" id="student-drawer">
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3>Student Profile Report</h3>
+                <button class="drawer-close" id="btn-close-drawer"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="drawer-body">
+                <!-- Profile Header Details -->
+                <div class="drawer-profile-header">
+                    <div class="drawer-avatar">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <div class="drawer-title-block">
+                        <h2 id="drawer-student-name">Rahul Gupta</h2>
+                        <span id="drawer-student-roll">BT22CSE045</span>
+                    </div>
+                </div>
+                
+                <!-- Performance KPI details -->
+                <div class="drawer-stats">
+                    <div class="drawer-stat-item">
+                        <span class="d-label">Semester</span>
+                        <span class="d-val" id="drawer-student-sem">4</span>
+                    </div>
+                    <div class="drawer-stat-item">
+                        <span class="d-label">SGPA</span>
+                        <span class="d-val" id="drawer-student-sgpa">0.00</span>
+                    </div>
+                    <div class="drawer-stat-item">
+                        <span class="d-label">Rank Status</span>
+                        <span class="d-val" id="drawer-student-rank">None</span>
+                    </div>
+                </div>
+
+                <!-- GPA circular indicator (SVG) -->
+                <div class="gpa-gauge-wrapper">
+                    <svg class="gpa-ring" width="120" height="120">
+                        <circle class="ring-bg" cx="60" cy="60" r="50" stroke-width="8" fill="transparent"/>
+                        <circle class="ring-fill" id="drawer-gpa-ring-fill" cx="60" cy="60" r="50" stroke-width="8" fill="transparent" stroke-dasharray="314.15" stroke-dashoffset="314.15"/>
+                    </svg>
+                    <div class="gpa-ring-text">
+                        <span class="gpa-ring-val" id="drawer-gpa-ring-text-val">0.00</span>
+                        <span class="gpa-ring-max">/ 10.0</span>
+                    </div>
+                </div>
+
+                <!-- Email info -->
+                <div class="drawer-info-row">
+                    <i class="fa-solid fa-envelope"></i>
+                    <div>
+                        <span class="info-lbl">Email Address</span>
+                        <span class="info-val" id="drawer-student-email">rahul@btech.edu</span>
+                    </div>
+                </div>
+
+                <!-- Course breakdown list -->
+                <div class="drawer-courses-section">
+                    <h4>Course Wise Scorecard</h4>
+                    <div class="drawer-courses-list" id="drawer-courses-list">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+            <div class="drawer-footer">
+                <button class="btn btn-secondary btn-block" id="btn-drawer-manage-grades">
+                    <i class="fa-solid fa-graduation-cap"></i> Edit Course Scores
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-branding">
+            <img src="./brand_logo.jpg" alt="Kushal Kabiraj Logo" class="footer-logo">
+            <div class="branding-text">
+                <span class="branding-title">Developed & Maintained by</span>
+                <span class="branding-name">Kushal Kabiraj</span>
+            </div>
+        </div>
+        <p class="copyright-text">&copy; 2026 Student Result Management System. All rights reserved. Designed for official academic record management.</p>
+    </footer>
+
+    <!-- Login Screen Overlay -->
+    <div class="login-overlay" id="login-overlay">
+        <div class="login-card">
+            <div class="login-card-header">
+                <img src="./brand_logo.jpg" alt="Kushal Kabiraj" class="login-brand-logo">
+                <h2>Academic Portal</h2>
+                <p>Authorized Administrative Login Only</p>
+            </div>
+            <form id="login-form">
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="login-username" style="display: block; margin-bottom: 0.5rem; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">Username or Email</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="login-username" required placeholder="Enter username...">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="login-password" style="display: block; margin-bottom: 0.5rem; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="login-password" required placeholder="Enter password...">
+                        <i class="fa-solid fa-eye toggle-password-btn" id="toggle-password" style="left: auto; right: 14px; cursor: pointer; color: var(--text-muted);"></i>
+                    </div>
+                </div>
+                <div class="login-error-msg" id="login-error-msg"></div>
+                <button type="submit" class="btn btn-primary btn-block login-submit-btn">
+                    <i class="fa-solid fa-right-to-bracket"></i> Login
+                </button>
+            </form>
+            <div class="login-help-note" style="line-height: 1.4; display: flex; align-items: flex-start; gap: 0.6rem;">
+                <i class="fa-solid fa-circle-info" style="margin-top: 2px;"></i>
+                <span><strong>Demo Credentials</strong><br>Username: <strong>admin</strong> (or <strong>admin@academic.edu</strong>)<br>Password: <strong>admin123</strong></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- App JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
